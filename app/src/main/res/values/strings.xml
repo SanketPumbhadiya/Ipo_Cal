@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">IPOCalculation</string>
+
+    <string-array name="Account_Array">
+        <item>Custom</item>
+        <item>Zerodha</item>
+        <item>Upstox</item>
+        <item>Groww</item>
+        <item>AngelOne</item>
+        <item>Dhan</item>
+        <item>Fyers</item>
+        <item>ProStocks</item>
+        <item>5 Paisa</item>
+
+    </string-array>
 </resources>
