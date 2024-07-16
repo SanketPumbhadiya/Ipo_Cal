@@ -7,10 +7,7 @@ import com.example.ipocalculation.MainActivity;
 import com.example.ipocalculation.SetMoreDetails;
 
 public class FyersCharges extends CommonCharges {
-    int purchaseQuan, purchaseSharePrice, sellSharePrice;
-    int totalLotPrice;
     final double IPFTCharges = totalLotPrice * ((double) 10 / 10000000);
-    private final double[] gstCharge = {0.0};
     public FyersCharges(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, SetMoreDetails callBack) {
         super(callBack);
         this.purchaseQuan = purchaseQuan;

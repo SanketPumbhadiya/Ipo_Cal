@@ -7,12 +7,7 @@ import com.example.ipocalculation.MainActivity;
 import com.example.ipocalculation.SetMoreDetails;
 
 public class FivePaisaCharges extends CommonCharges {
-    int purchaseQuan, purchaseSharePrice, sellSharePrice;
     final double Brokerage = 20;
-
-    int totalLotPrice;
-
-    private final double[] gstCharge = {0.0};
 
     public FivePaisaCharges(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, SetMoreDetails callBack) {
         super(callBack);

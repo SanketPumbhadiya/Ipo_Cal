@@ -6,6 +6,8 @@ import java.text.DecimalFormat;
 
 public abstract class CommonCharges {
 
+    public int purchaseQuan, purchaseSharePrice, sellSharePrice, totalLotPrice;
+    public final double[] gstCharge = {0.0};
     double STTCharge = 0.1;
     double NSECharge = 0.00322;
     double SEBICharge = 10;

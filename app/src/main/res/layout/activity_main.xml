@@ -127,6 +127,7 @@
 
         <Button
             android:id="@+id/btnSubmit"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll4"
@@ -164,6 +165,7 @@
 
         <Button
             android:id="@+id/btnMoreDetails"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/llSellQuantity"

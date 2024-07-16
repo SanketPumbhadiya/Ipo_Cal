@@ -7,12 +7,7 @@ import com.example.ipocalculation.MainActivity;
 import com.example.ipocalculation.SetMoreDetails;
 
 public class AngelOneCharges extends CommonCharges {
-    int purchaseQuan, purchaseSharePrice, sellSharePrice;
-
-    int totalLotPrice;
-    SetMoreDetails callback;
     final double DP_CHARGES = 20;
-    private final double[] gstCharge = {0.0};
 
     public AngelOneCharges(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, SetMoreDetails callBack) {
         super(callBack);
@@ -27,14 +22,14 @@ public class AngelOneCharges extends CommonCharges {
         double SEBICharges = SebiCharges(totalLotPrice);
         double TransactionCharge = TransactionCharges(totalLotPrice);
         double STTCharge = STTCharges(totalLotPrice);
-        GSTCharges(SEBICharges,TransactionCharge, 0);
+        GSTCharges(SEBICharges, TransactionCharge, 0);
         double totalCharges = -(SEBICharges + TransactionCharge + STTCharge + gstCharge[0] + DP_CHARGES);
         Log.e("Sanket", "SEBICharges" + SEBICharges + "TransactionCharge" + TransactionCharge + "STTCharge" + STTCharge + "GSTCharge" + gstCharge[0] + "totalCharges" + totalCharges);
         mainCalculation(purchaseQuan, purchaseSharePrice, sellSharePrice, totalCharges);
     }
 
     @Override
-    public void GSTCharges(double SebiCharges ,double TransactionCharges, double Brokerage) {
-        gstCharge[0] = (SebiCharges+ TransactionCharges + DP_CHARGES) * ((double) 18 / 100);
+    public void GSTCharges(double SebiCharges, double TransactionCharges, double Brokerage) {
+        gstCharge[0] = (SebiCharges + TransactionCharges + DP_CHARGES) * ((double) 18 / 100);
     }
 }

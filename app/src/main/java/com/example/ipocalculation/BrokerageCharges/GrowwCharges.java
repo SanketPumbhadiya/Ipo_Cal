@@ -7,9 +7,6 @@ import com.example.ipocalculation.MainActivity;
 import com.example.ipocalculation.SetMoreDetails;
 
 public class GrowwCharges extends CommonCharges {
-    int purchaseQuan, purchaseSharePrice, sellSharePrice;
-    int totalLotPrice;
-    private final double[] gstCharge = {0.0};
 
     public GrowwCharges(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, SetMoreDetails callBack) {
         super(callBack);
@@ -30,14 +27,14 @@ public class GrowwCharges extends CommonCharges {
         double SEBICharges = SebiCharges(totalLotPrice);
         double TransactionCharge = TransactionCharges(totalLotPrice);
         double STTCharge = STTCharges(totalLotPrice);
-        GSTCharges(SEBICharges,TransactionCharge, Brokerage);
+        GSTCharges(SEBICharges, TransactionCharge, Brokerage);
         double totalCharges = -(SEBICharges + TransactionCharge + STTCharge + gstCharge[0] + Brokerage);
         Log.e("Sanket", "SEBICharges" + SEBICharges + "TransactionCharge" + TransactionCharge + "STTCharge" + STTCharge + "GSTCharge" + gstCharge[0] + "totalCharges" + totalCharges);
         mainCalculation(purchaseQuan, purchaseSharePrice, sellSharePrice, totalCharges);
     }
 
     @Override
-    public void GSTCharges(double SebiCharges ,double TransactionCharges, double Brokerage) {
+    public void GSTCharges(double SebiCharges, double TransactionCharges, double Brokerage) {
         gstCharge[0] = (SebiCharges + TransactionCharges + Brokerage) * ((double) 18 / 100);
     }
 }

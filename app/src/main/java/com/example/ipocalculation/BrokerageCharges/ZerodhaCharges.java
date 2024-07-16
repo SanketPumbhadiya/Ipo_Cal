@@ -7,10 +7,7 @@ import com.example.ipocalculation.MainActivity;
 import com.example.ipocalculation.SetMoreDetails;
 
 public class ZerodhaCharges extends CommonCharges {
-    int purchaseQuan, purchaseSharePrice, sellSharePrice;
-    int totalLotPrice;
     final double DP_CHARGES = 15.34;
-    private final double[] gstCharge = {0.0};
 
     public ZerodhaCharges(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, SetMoreDetails callBack) {
         super(callBack);
