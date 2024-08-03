@@ -2,7 +2,7 @@ package com.example.ipocalculation;
 
 import android.util.Log;
 
-import java.text.DecimalFormat;
+import com.example.ipocalculation.Interfaces.SetMoreDetails;
 
 public abstract class CommonCharges {
 
@@ -18,11 +18,11 @@ public abstract class CommonCharges {
     }
 
     public double SebiCharges(int totalLotPrice) {
-        Log.i("Sanket", "totalLotPrice" + totalLotPrice);
+        Log.i("IPO", "totalLotPrice" + totalLotPrice);
         return (totalLotPrice * SEBICharge) / 10000000;
     }
 
-    public double STTCharges(int totalLotPrice) {
+    public double SttCharges(int totalLotPrice) {
         return (totalLotPrice * STTCharge) / 100;
     }
 
@@ -30,38 +30,31 @@ public abstract class CommonCharges {
         return totalLotPrice * (NSECharge / 100);
     }
 
-    public abstract void GSTCharges(double SebiCharges, double TransactionCharges, double Brokerage);
+    public abstract void GstCharges(double SebiCharges, double TransactionCharges, double Brokerage);
 
-    public void mainCalculation(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, double brokerageCharges) {
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    public void mainCalculation(int purchaseQuan, int purchaseSharePrice, int sellSharePrice, double brokerage) {
 
         int totalLotPrice = purchaseQuan * purchaseSharePrice;
-        decimalFormat.format(totalLotPrice);
 
-        Log.i("Sanket", "CustomBrokerage" + brokerageCharges);
-        decimalFormat.format(brokerageCharges);
-        Log.e("Sanket", "totalCharges" + brokerageCharges);
+        Log.e("IPO", "totalLotPrice ::" + totalLotPrice);
+        Log.i("IPO", "CustomBrokerage ::" + brokerage);
 
         int profit = purchaseQuan * (sellSharePrice - purchaseSharePrice);
-        Log.e("Sanket", "profit" + profit);
+        Log.e("IPO", "profit ::" + profit);
 
-        profit = (int) (profit + brokerageCharges);
-        decimalFormat.format(profit);
-        Log.e("Sanket", "profit" + profit);
+        profit = (int) (profit + brokerage);
+        Log.e("IPO", "profit ::" + profit);
 
         double tax = profit * 0.15;
-        decimalFormat.format(tax);
-        Log.e("Sanket", "totalTax" + tax);
+        Log.e("IPO", "totalTax ::" + tax);
 
         double finalProfit = profit - tax;
-        decimalFormat.format(finalProfit);
-        Log.e("Sanket", "finalProfit" + finalProfit);
+        Log.e("IPO", "finalProfit ::" + finalProfit);
 
         double totalProfit = finalProfit + totalLotPrice;
-        decimalFormat.format(totalProfit);
-        Log.e("Sanket", "totalProfit" + totalProfit);
+        Log.e("IPO", "totalProfit ::" + totalProfit);
 
         int totalSellQuan = (int) (purchaseQuan * (totalLotPrice / totalProfit) + 1);
-        callBackInterface.setMoreDetails(purchaseQuan, purchaseSharePrice, sellSharePrice, (int) brokerageCharges, totalSellQuan);
+        callBackInterface.setMoreDetails(purchaseQuan, purchaseSharePrice, sellSharePrice, (int) brokerage, totalSellQuan);
     }
 }

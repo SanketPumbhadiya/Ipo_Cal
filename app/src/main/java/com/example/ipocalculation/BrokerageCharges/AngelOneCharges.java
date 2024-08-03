@@ -3,8 +3,7 @@ package com.example.ipocalculation.BrokerageCharges;
 import android.util.Log;
 
 import com.example.ipocalculation.CommonCharges;
-import com.example.ipocalculation.MainActivity;
-import com.example.ipocalculation.SetMoreDetails;
+import com.example.ipocalculation.Interfaces.SetMoreDetails;
 
 public class AngelOneCharges extends CommonCharges {
     final double DP_CHARGES = 20;
@@ -19,17 +18,17 @@ public class AngelOneCharges extends CommonCharges {
     }
 
     private void TotalAllCharges() {
-        double SEBICharges = SebiCharges(totalLotPrice);
+        double SebiCharge = SebiCharges(totalLotPrice);
         double TransactionCharge = TransactionCharges(totalLotPrice);
-        double STTCharge = STTCharges(totalLotPrice);
-        GSTCharges(SEBICharges, TransactionCharge, 0);
-        double totalCharges = -(SEBICharges + TransactionCharge + STTCharge + gstCharge[0] + DP_CHARGES);
-        Log.e("Sanket", "SEBICharges" + SEBICharges + "TransactionCharge" + TransactionCharge + "STTCharge" + STTCharge + "GSTCharge" + gstCharge[0] + "totalCharges" + totalCharges);
+        double SttCharge = SttCharges(totalLotPrice);
+        GstCharges(SebiCharge, TransactionCharge, 0);
+        double totalCharges = -(SebiCharge + TransactionCharge + SttCharge + gstCharge[0] + DP_CHARGES);
+        Log.e("IPO", "SebiCharges :" + SebiCharge + "TransactionCharge :" + TransactionCharge + "STTCharge :" + SttCharge + "GSTCharge :" + gstCharge[0] + "totalCharges :" + totalCharges);
         mainCalculation(purchaseQuan, purchaseSharePrice, sellSharePrice, totalCharges);
     }
 
     @Override
-    public void GSTCharges(double SebiCharges, double TransactionCharges, double Brokerage) {
+    public void GstCharges(double SebiCharges, double TransactionCharges, double Brokerage) {
         gstCharge[0] = (SebiCharges + TransactionCharges + DP_CHARGES) * ((double) 18 / 100);
     }
 }

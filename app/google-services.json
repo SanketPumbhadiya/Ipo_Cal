@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "4085372789",
+    "project_id": "ipocalculation",
+    "storage_bucket": "ipocalculation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4085372789:android:4771f2618cc9a5c86e653c",
+        "android_client_info": {
+          "package_name": "com.example.ipocalculation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC334KVWmrENY0Mly3KW9gyJzIHgytTtgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

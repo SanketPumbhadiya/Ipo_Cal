@@ -1,4 +1,4 @@
-package com.example.ipocalculation;
+package com.example.ipocalculation.Interfaces;
 
 public interface SetMoreDetails {
 

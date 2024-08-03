@@ -5,385 +5,82 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        tools:context=".MainActivity"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".Activities.MainActivity"
         tools:ignore="HardcodedText">
 
         <LinearLayout
-            android:id="@+id/ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:hint="Share Quantity">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtPurchaseQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll1"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="32dp"
-                android:hint="Purchase  Share Price">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtPurchaseSharePrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll2"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="32dp"
-                android:hint="Sell Share Price">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtCurrentSharePrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <Spinner
-            android:id="@+id/spnrAccount"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_below="@id/ll3"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/spnrbg"
-            android:padding="10dp" />
-
-        <LinearLayout
-            android:id="@+id/ll4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spnrAccount"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="32dp"
-                android:hint="Brokerage">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtBrokerage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSubmit"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll4"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="Submit" />
-
-        <LinearLayout
-            android:id="@+id/llSellQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnSubmit"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
+            <Button
+                android:id="@+id/btnAllIpo"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="90dp"
-                android:text="Sell Quantity ::"
-                android:textColor="#B12319"
-                android:textSize="19sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:text="All Ipo"
+                android:textAllCaps="false" />
 
-            <TextView
-                android:id="@+id/tvSellQuantityShare"
+            <Button
+                android:id="@+id/btnMainBoardIpoDetails"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:text=""
-                android:textColor="#B12319"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:text="Main Board Ipo"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSmeIpoDetails"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sme Ipo"
+                android:textAllCaps="false" />
+
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnMoreDetails"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llSellQuantity"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="More Details" />
-
-        <RelativeLayout
-            android:id="@+id/relativeMain"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnMoreDetails"
-            android:orientation="horizontal"
+            android:divider="#FFFFFF"
+            android:visibility="gone"
+            tools:listitem="@layout/customlistview" />
+
+        <LinearLayout
+            android:id="@+id/linearLoadingPB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="240dp"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/llProfit"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Profit ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvProfit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llTaxCal"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/llProfit"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:fontFamily="monospace"
+                android:letterSpacing="0.2"
+                android:text="Loading..."
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Tax Calculation ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTaxCal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llFinalProfit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llTaxCal"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Final Profit ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvFinalProfit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llInvestedAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llFinalProfit"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Invested Amount ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvInvestedAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llFinalAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llInvestedAmount"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Final Amount ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvFinalAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llRemainingQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llFinalAmount"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Remaining Quantity ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRemainingQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llRemainingQuanPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llRemainingQuantity"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="90dp"
-                    android:text="Remaining Quantity Price ::"
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRemainingQuantityPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="70dp"
-                    android:text=""
-                    android:textColor="#19B1A4"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>
