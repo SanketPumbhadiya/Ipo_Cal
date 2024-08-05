@@ -6,11 +6,9 @@ import java.io.Serializable;
 public class IpoDetailsSetData implements Serializable {
 
     String companyName, openDate, closeDate, listingDate, exchange;
-    int issuePrice;
+    int issuePrice,lotSize,SHniLot,BHniLot;
 
-    int lotSize;
-
-    public IpoDetailsSetData(String companyName, String openDate, String closeDate, String listingDate, int lotSize, int issuePrice, String exchange) {
+    public IpoDetailsSetData(String companyName, String openDate, String closeDate, String listingDate, int lotSize, int issuePrice, String exchange,int SHniLot,int BHniLot) {
         this.companyName = companyName;
         this.openDate = openDate;
         this.closeDate = closeDate;
@@ -18,6 +16,16 @@ public class IpoDetailsSetData implements Serializable {
         this.issuePrice = issuePrice;
         this.lotSize = lotSize;
         this.exchange = exchange;
+        this.SHniLot = SHniLot;
+        this.BHniLot = BHniLot;
+    }
+
+    public int getSHniLot() {
+        return SHniLot;
+    }
+
+    public int getBHniLot() {
+        return BHniLot;
     }
 
     public String getCompanyName() {

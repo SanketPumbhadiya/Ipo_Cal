@@ -43,10 +43,8 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
     RadioGroup radioGroup;
     LinearLayout linearLayoutMoreDetails, linearLayoutBrok;
     CommonCharges commonCharges;
-
-    IpoDetailsSetData modelData;
     LotSizeData lotSizeData = new LotSizeData();
-    int quantity, price;
+    int quantity, price, purchaseQuan, purchaseSharePrice, singleLotPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +60,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
         Intent intent = getIntent();
 
         IpoDetailsSetData model = (IpoDetailsSetData) intent.getSerializableExtra("SerializeData");
+
         if (model != null) {
             edtPurchaseQuantity.setText("" + model.getLotSize());
             edtPurchaseSharePrice.setText("" + model.getIssuePrice());
@@ -69,6 +68,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
 
             quantity = model.getLotSize();
             price = model.getIssuePrice();
+            singleLotPrice = quantity * price;
         }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -77,36 +77,40 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
                     edtPurchaseQuantity.setEnabled(false);
                     lotSizeData.setRetail(quantity);
                     edtPurchaseQuantity.setText(" " + lotSizeData.getRetail());
-//                    purchaseQuan = modelData.getLotSize();
-//                    purchaseSharePrice = modelData.getIssuePrice();
+
+                    purchaseQuan = quantity;
+                    purchaseSharePrice = price;
                 } else if (rdSHni.isChecked()) {
                     edtPurchaseQuantity.setEnabled(false);
-                    int sHniQuantity = quantity * 15;
-                    int sHniPrice = price * sHniQuantity;
-                    lotSizeData.setS_hni(sHniQuantity);
+                    if (model != null) {
+                        int sHniQuantity = quantity * model.getSHniLot();
 
-                    edtPurchaseQuantity.setText(" " + lotSizeData.getS_hni());
+                        if (singleLotPrice > 100000) {
+                            sHniQuantity = 0;
+                        }
+                        lotSizeData.setS_hni(sHniQuantity);
+                        edtPurchaseQuantity.setText(" " + lotSizeData.getS_hni());
 
-//                    purchaseQuan = sHniQuantity;
-//                    purchaseSharePrice = sHniPrice;
+                        purchaseQuan = sHniQuantity;
+                    }
                 } else if (rdBHni.isChecked()) {
                     edtPurchaseQuantity.setEnabled(false);
-                    int bHniQuantity = quantity * 68;
-                    int bHniPrice = price * bHniQuantity;
-                    lotSizeData.setB_hni(bHniQuantity);
+                    if (model != null) {
+                        int bHniQuantity = quantity * model.getBHniLot();
 
-                    edtPurchaseQuantity.setText(" " + lotSizeData.getB_hni());
-
-//                    purchaseQuan = bHniQuantity;
-//                    purchaseSharePrice = bHniPrice;
-
+                        if (singleLotPrice > 100000) {
+                            bHniQuantity = quantity * 2;
+                        }
+                        lotSizeData.setB_hni(bHniQuantity);
+                        edtPurchaseQuantity.setText(" " + lotSizeData.getB_hni());
+                        purchaseQuan = bHniQuantity;
+                    }
                 } else if (rdCustom.isChecked()) {
                     edtPurchaseQuantity.setEnabled(true);
                     edtPurchaseQuantity.setText(" ");
                 }
             }
         });
-
     }
 
     View.OnClickListener onClickBtnMoreDetails = new View.OnClickListener() {
@@ -153,6 +157,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -160,65 +165,61 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
     private void setSpinnerItemChange() {
         if (edtPurchaseQuantity.getText().toString().equals("")) {
             edtPurchaseQuantity.setError("Required field");
-            return;
-        }
-        if (edtPurchaseSharePrice.getText().toString().equals("")) {
+        } else if (edtPurchaseSharePrice.getText().toString().equals("")) {
             edtPurchaseSharePrice.setError("Required field");
-            return;
-        }
-        if (edtSellSharePrice.getText().toString().equals("")) {
+        } else if (edtSellSharePrice.getText().toString().equals("")) {
             edtSellSharePrice.setError("Required field");
-            return;
-        }
+        } else {
+            int purchaseQuan = Integer.parseInt(edtPurchaseQuantity.getText().toString().trim());
+            int purchaseSharePrice = Integer.parseInt(edtPurchaseSharePrice.getText().toString().trim());
+            int sellSharePrice = Integer.parseInt(edtSellSharePrice.getText().toString().trim());
 
-        int purchaseQuan = Integer.parseInt(edtPurchaseQuantity.getText().toString().trim());
-        int purchaseSharePrice = Integer.parseInt(edtPurchaseSharePrice.getText().toString().trim());
-        int sellSharePrice = Integer.parseInt(edtSellSharePrice.getText().toString().trim());
+            int position = spnrAccount.getSelectedItemPosition();
+            switch (position) {
+                case 0:
+                    linearLayoutBrok.setVisibility(View.VISIBLE);
 
-        int position = spnrAccount.getSelectedItemPosition();
-        switch (position) {
-            case 0:
-                linearLayoutBrok.setVisibility(View.VISIBLE);
-                if (edtBrokerage.getText().toString().equals("")) {
-                    edtBrokerage.setError("Required field");
-                    return;
-                }
-                double brokerage = Double.parseDouble(edtBrokerage.getText().toString());
-                double brokerageCharges = -(sellSharePrice * purchaseQuan) * (brokerage / 100);
-                commonCharges.mainCalculation(purchaseQuan, purchaseSharePrice, sellSharePrice, brokerageCharges);
-                break;
-            case 1:
-                linearLayoutBrok.setVisibility(View.INVISIBLE);
-                new ZerodhaCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 2:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new UpStoxCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 3:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new GrowwCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 4:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new AngelOneCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 5:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new DhanCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 6:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new FyersCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 7:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new ProStocksCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
-            case 8:
-                linearLayoutBrok.setVisibility(View.GONE);
-                new FivePaisaCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
-                break;
+                    if (edtBrokerage.getText().toString().equals("")) {
+                        edtBrokerage.setError("Required field");
+                        return;
+                    }
+                    double brokerage = Double.parseDouble(edtBrokerage.getText().toString());
+                    double brokerageCharges = -(sellSharePrice * purchaseQuan) * (brokerage / 100);
+                    commonCharges.mainCalculation(purchaseQuan, purchaseSharePrice, sellSharePrice, brokerageCharges);
+                    break;
+                case 1:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new ZerodhaCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 2:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new UpStoxCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 3:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new GrowwCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 4:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new AngelOneCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 5:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new DhanCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 6:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new FyersCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 7:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new ProStocksCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+                case 8:
+                    linearLayoutBrok.setVisibility(View.GONE);
+                    new FivePaisaCharges(purchaseQuan, purchaseSharePrice, sellSharePrice, CalculationActivity.this);
+                    break;
+            }
         }
     }
 

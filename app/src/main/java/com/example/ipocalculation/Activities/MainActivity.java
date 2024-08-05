@@ -164,11 +164,13 @@ public class MainActivity extends AppCompatActivity {
                     String openDate = (String) ipoDetailsMap.get("Open Date");
                     String closeDate = (String) ipoDetailsMap.get("Close Date");
                     String listingDate = (String) ipoDetailsMap.get("Listing Date");
+                    String exchange = (String) ipoDetailsMap.get("Exchange");
                     String lotSizeStr = ipoDetailsMap.get("Lot Size").toString();
                     String issuePriceStr = ipoDetailsMap.get("Issue Price (Rs)").toString();
-                    String exchange = (String) ipoDetailsMap.get("Exchange");
+                    String s_hniLotStr = ipoDetailsMap.get("SHniLot").toString();
+                    String b_hniLotStr = ipoDetailsMap.get("BHniLot").toString();
 
-                    int issuePrice = 0, lotSize = 0;
+                    int issuePrice = 0, lotSize = 0, s_hniLot = 0, b_hniLot = 0;
                     if (issuePriceStr.contains("to")) {
                         String[] splitIssuePrice = issuePriceStr.split("to");
                         Log.e("Sanket", "Spliit" + Arrays.toString(splitIssuePrice));
@@ -185,14 +187,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (!lotSizeStr.equals("")) {
+                    if (!lotSizeStr.equals("") || !s_hniLotStr.equals("") || !b_hniLotStr.equals("")) {
                         try {
                             lotSize = Integer.parseInt(lotSizeStr.trim());
+                            s_hniLot = Integer.parseInt(s_hniLotStr.trim());
+                            b_hniLot = Integer.parseInt(b_hniLotStr.trim());
                         } catch (NumberFormatException e) {
                             Log.e("Sanket", "Error parsing single lot size: " + e.getMessage());
                         }
                     }
-                    model = new IpoDetailsSetData(issuerCompany, openDate, closeDate, listingDate, lotSize, issuePrice, exchange);
+
+                    model = new IpoDetailsSetData(issuerCompany, openDate, closeDate, listingDate, lotSize, issuePrice, exchange, s_hniLot, b_hniLot);
                     ipoList.add(model);
                 }
             }

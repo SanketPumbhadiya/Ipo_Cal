@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
+            android:text="Company Name"
             android:textSize="15sp"
             android:textStyle="bold" />
 
