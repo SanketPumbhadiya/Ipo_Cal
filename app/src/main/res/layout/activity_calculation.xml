@@ -26,9 +26,9 @@
         <View
             android:layout_width="250dp"
             android:layout_height="2dp"
-            android:background="@color/black"
+            android:layout_gravity="center"
             android:layout_marginBottom="8dp"
-            android:layout_gravity="center" />
+            android:background="@color/black" />
 
         <RadioGroup
             android:id="@+id/rdGroup"
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginBottom="8dp"
                 android:text="Lot Size :"
                 android:textSize="16sp"
@@ -145,16 +145,33 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-
-        <Button
-            android:id="@+id/btnSubmit"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:text="Submit"
-            android:textAllCaps="false" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSubmit"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="Submit"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSaveHistory"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:text="SaveHistory"
+                android:textAllCaps="false" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llSellQuantity"
@@ -200,7 +217,7 @@
             android:layout_marginStart="65dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/llProfit"

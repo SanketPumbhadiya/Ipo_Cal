@@ -1,11 +1,14 @@
 package com.example.ipocalculation.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -17,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ipocalculation.BrokerageCharges.AngelOneCharges;
 import com.example.ipocalculation.BrokerageCharges.DhanCharges;
@@ -31,12 +35,18 @@ import com.example.ipocalculation.Interfaces.SetMoreDetails;
 import com.example.ipocalculation.IpoDetailsSetData;
 import com.example.ipocalculation.LotSizeData;
 import com.example.ipocalculation.R;
+import com.example.ipocalculation.SqlDB;
+
+import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CalculationActivity extends AppCompatActivity implements SetMoreDetails {
     EditText edtPurchaseQuantity, edtPurchaseSharePrice, edtSellSharePrice, edtBrokerage;
-    Button btnSubmit, btnMoreDetails;
+    Button btnSubmit, btnMoreDetails, btnSaveHistory;
     TextView tvSellQuantityShare, tvProfit, tvTaxCal, tvFinalProfit, tvInvestedAmount, tvFinalAmount, tvRemainingQuantity, tvRemainingQuantityPrice, tvCompanyName;
     Spinner spnrAccount;
     RadioButton rdRetails, rdSHni, rdBHni, rdCustom;
@@ -45,6 +55,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
     CommonCharges commonCharges;
     LotSizeData lotSizeData = new LotSizeData();
     int quantity, price, purchaseQuan, purchaseSharePrice, singleLotPrice;
+    SqlDB sdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +64,28 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
 
         setWidgets();
         setupSpinner();
+        sdb = new SqlDB(getApplicationContext());
 
         btnSubmit.setOnClickListener(onClickBtnSubmit);
         btnMoreDetails.setOnClickListener(onClickBtnMoreDetails);
+        btnSaveHistory.setOnClickListener(onClickBtnSaveHistory);
 
         Intent intent = getIntent();
 
         IpoDetailsSetData model = (IpoDetailsSetData) intent.getSerializableExtra("SerializeData");
 
         if (model != null) {
-            edtPurchaseQuantity.setText("" + model.getLotSize());
-            edtPurchaseSharePrice.setText("" + model.getIssuePrice());
+            edtPurchaseQuantity.setText(String.valueOf(model.getLotSize()));
+            edtPurchaseSharePrice.setText(String.valueOf(model.getIssuePrice()));
             tvCompanyName.setText(model.getCompanyName());
 
             quantity = model.getLotSize();
             price = model.getIssuePrice();
             singleLotPrice = quantity * price;
+
+            if (singleLotPrice > 100000) {
+                rdSHni.setVisibility(View.GONE);
+            }
         }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -76,20 +93,17 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
                 if (rdRetails.isChecked()) {
                     edtPurchaseQuantity.setEnabled(false);
                     lotSizeData.setRetail(quantity);
-                    edtPurchaseQuantity.setText(" " + lotSizeData.getRetail());
+                    edtPurchaseQuantity.setText(String.valueOf(lotSizeData.getRetail()));
 
                     purchaseQuan = quantity;
                     purchaseSharePrice = price;
+
                 } else if (rdSHni.isChecked()) {
                     edtPurchaseQuantity.setEnabled(false);
                     if (model != null) {
                         int sHniQuantity = quantity * model.getSHniLot();
-
-                        if (singleLotPrice > 100000) {
-                            sHniQuantity = 0;
-                        }
                         lotSizeData.setS_hni(sHniQuantity);
-                        edtPurchaseQuantity.setText(" " + lotSizeData.getS_hni());
+                        edtPurchaseQuantity.setText(String.valueOf(lotSizeData.getS_hni()));
 
                         purchaseQuan = sHniQuantity;
                     }
@@ -102,7 +116,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
                             bHniQuantity = quantity * 2;
                         }
                         lotSizeData.setB_hni(bHniQuantity);
-                        edtPurchaseQuantity.setText(" " + lotSizeData.getB_hni());
+                        edtPurchaseQuantity.setText(String.valueOf(lotSizeData.getB_hni()));
                         purchaseQuan = bHniQuantity;
                     }
                 } else if (rdCustom.isChecked()) {
@@ -113,6 +127,57 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
         });
     }
 
+    View.OnClickListener onClickBtnSaveHistory = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(CalculationActivity.this);
+
+            View dialogView = LayoutInflater.from(CalculationActivity.this).inflate(R.layout.popupsavehistory, null);
+            TextView tvPrice = dialogView.findViewById(R.id.tvPurchasePrice);
+            TextView tvDateTime = dialogView.findViewById(R.id.tvTime);
+            EditText edtQuantity = dialogView.findViewById(R.id.edtSellQuantity);
+            EditText edtPrice = dialogView.findViewById(R.id.edtSellPrice);
+
+            tvPrice.setText(String.valueOf(price));
+            edtQuantity.setText(tvSellQuantityShare.getText().toString());
+            edtPrice.setText(edtSellSharePrice.getText().toString());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+            String time = dateFormat.format(new Date());
+            tvDateTime.setText(time);
+
+            builder.setView(dialogView);
+            builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String getEdtQuantityStr = edtQuantity.getText().toString().trim();
+                    String getEdtPriceStr = edtPrice.getText().toString().trim();
+
+                    if (getEdtQuantityStr.equals("")) {
+                        Toast.makeText(CalculationActivity.this, "Enter Quantity ", Toast.LENGTH_SHORT).show();
+                    } else if (getEdtPriceStr.equals("")) {
+                        Toast.makeText(CalculationActivity.this, "Enter Price", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int quantity = Integer.parseInt(getEdtQuantityStr);
+                        int sellPrice = Integer.parseInt(getEdtPriceStr);
+                        int purPrice = Integer.parseInt(tvPrice.getText().toString().trim());
+                        String time = tvDateTime.getText().toString().trim();
+
+                        sdb.SaveData(purPrice, sellPrice, quantity, time);
+                    }
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
+    };
     View.OnClickListener onClickBtnMoreDetails = new View.OnClickListener() {
         @SuppressLint("SetTextI18n")
         @Override
@@ -231,6 +296,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
 
         btnSubmit = findViewById(R.id.btnSubmit);
         btnMoreDetails = findViewById(R.id.btnMoreDetails);
+        btnSaveHistory = findViewById(R.id.btnSaveHistory);
 
         tvSellQuantityShare = findViewById(R.id.tvSellQuantityShare);
         tvProfit = findViewById(R.id.tvProfit);
@@ -253,6 +319,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
         rdCustom = findViewById(R.id.radio_custom);
 
         radioGroup = findViewById(R.id.rdGroup);
+
 
         edtPurchaseQuantity.setEnabled(false);
         rdRetails.setChecked(true);
