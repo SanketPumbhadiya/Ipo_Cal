@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         btnAllIpo.setOnClickListener(onClickBtnAllIpo);
 
         rcvIpoDetails.setLayoutManager(new LinearLayoutManager(this));
+
+        getMainBoardDataFromFireStore();
+        rcvIpoDetails.setVisibility(View.VISIBLE);
     }
 
     View.OnClickListener onClickBtnAllIpo = new View.OnClickListener() {

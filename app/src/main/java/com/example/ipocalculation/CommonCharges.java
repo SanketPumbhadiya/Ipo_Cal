@@ -45,7 +45,7 @@ public abstract class CommonCharges {
         profit = (int) (profit + brokerage);
         Log.e("IPO", "profit ::" + profit);
 
-        double tax = profit * 0.15;
+        double tax = profit * 0.20;
         Log.e("IPO", "totalTax ::" + tax);
 
         double finalProfit = profit - tax;
