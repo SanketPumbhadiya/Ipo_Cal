@@ -354,7 +354,7 @@ public class CalculationActivity extends AppCompatActivity implements SetMoreDet
 
         profit = profit + brokerageCharges;
         Log.e("IPO", "profit ::" + profit);
-        double tax = profit * 0.15;
+        double tax = profit * 0.20;
         String taxDF = decimalFormat.format(tax);
         Log.e("IPO", "totalTax ::" + tax);
         double finalProfit = profit - tax;
